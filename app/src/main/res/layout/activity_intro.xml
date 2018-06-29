@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".introActivity">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/human_body"
+        />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#cf3670c7"
+        />
+    <TextView
+        android:id="@+id/intro_txt"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="170dp"
+        android:layout_height="wrap_content"
+        android:padding="20dp"
+        android:gravity="center"
+        android:textColor="#fff"
+        android:textSize="25sp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:text="HOW MUCH DO YOU KNOW ABOUT YOURSELF"
+        />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="12dp"
+        android:background="#14dc64"
+        android:onClick="startQuiz"
+        android:text="  START A QUIZ  "
+        android:textColor="#fff" />
+
+
+</RelativeLayout>
