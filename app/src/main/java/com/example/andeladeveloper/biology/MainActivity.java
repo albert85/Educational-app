@@ -1,226 +1,230 @@
 package com.example.andeladeveloper.biology;
 
 import android.content.Intent;
-import android.content.res.Resources;
-import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.text.method.ScrollingMovementMethod;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    Resources res;
-    int question_index = 0, answer_index = 0, insight_index = 0, question_length = 0;
-    int corrected_score = 0;
-    TextView getquestion_txt, getinsight_txt, get_answer_status;
-    RadioButton get_yes_rad, get_no_rad;
-    RadioGroup answer_rad;
-    Button getCheckBtn, getNextBtn;
-    String get_answer_chosen="";
+    private EditText getQuestionOneSuppliedAnswer, getQuestionFiveSuppliedAns;
+    private CheckBox getQuestionTwoOptionOne, getGetQuestionTwoOptionTwo, getGetQuestionTwoOptionThree, getGetQuestionTwoOptionFour;
+    private CheckBox getQuestionSixOptionOne, getGetQuestionSixOptionTwo, getGetQuestionSixOptionThree, getGetQuestionSixOptionFour;
+    private int correctAnsSelected = 0, wrongAnsSelected = 0;
+    private RadioButton getQuestionThreeAns, getQuestionFourAns, getQuestionSevenAns;
+    private Button getSubmitBtn, getScoreBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // find the question textview
-        getquestion_txt = findViewById(R.id.question_txt);
+        // get the answer supplied by the user
+        getQuestionOneSuppliedAnswer = findViewById(R.id.answer_one);
 
-        // find the insight textview
-        getinsight_txt = findViewById(R.id.insert_insight_txt);
+        //get all question two options
+        getQuestionTwoOptionOne = findViewById(R.id.question_two_option_one);
+        getGetQuestionTwoOptionTwo = findViewById(R.id.question_two_option_two);
+        getGetQuestionTwoOptionThree = findViewById(R.id.question_two_option_three);
+        getGetQuestionTwoOptionFour = findViewById(R.id.question_two_option_four);
 
-        //find selected answer
-        get_yes_rad = findViewById(R.id.yes_chk);
-        get_no_rad = findViewById(R.id.no_chk);
+        // get question three selected answer
+        getQuestionThreeAns = findViewById(R.id.question_three_option_two_radio);
 
-        //find check and next button
-        getCheckBtn = findViewById(R.id.check_btn);
-        getNextBtn = findViewById(R.id.next_btn);
+        //get question four selected answer
+        getQuestionFourAns = findViewById(R.id.question_four_option_one);
 
-        //get selected answer
-        answer_rad = findViewById(R.id.selected_answer_rad);
+        //get the answer supplied by the user for question five
+        getQuestionFiveSuppliedAns = findViewById(R.id.question_five_answer_edit);
 
-        // get answer status
-        get_answer_status = findViewById(R.id.answer_status);
+        //get all question Six options
+        getQuestionSixOptionOne = findViewById(R.id.question_six_option_one_chk);
+        getGetQuestionSixOptionTwo = findViewById(R.id.question_six_option_two_chk);
+        getGetQuestionSixOptionThree = findViewById(R.id.question_six_option_three_chk);
+        getGetQuestionSixOptionFour = findViewById(R.id.question_six_option_four_chk);
 
-        //disable next button until answer is chosen
-        getNextBtn.setClickable(false);
-        getNextBtn.setAlpha(.3f);
+        //get question seven selected answer
+        getQuestionSevenAns = findViewById(R.id.question_seven_option_one_radio);
 
+        // find submit and score button
+        getSubmitBtn = findViewById(R.id.submit_btn);
+        getScoreBtn = findViewById(R.id.score_btn);
 
-        //set resource to get questions
-        res = getResources();
-
-        //load the first question
-        loadQuestion();
-
-        //get selected answerr
-        getSelectedAnswer();
-    }
-
-    public void getSelectedAnswer(){
-
-        answer_rad.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                switch (checkedId){
-                    case R.id.yes_chk:
-                        get_answer_chosen = "Yes";
-                        //Toast.makeText(MainActivity.this, "Yes", Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.no_chk:
-                        //Toast.makeText(MainActivity.this, "No", Toast.LENGTH_SHORT).show();
-                        get_answer_chosen = "No";
-                        break;
-                        default:
-                            break;
-
-                }
-            }
-        });
+        // dont allow access to check score button until the quiz is submitted
+        getScoreBtn.setClickable(false);
+        getScoreBtn.setAlpha(0.3f);
 
     }
 
     /*
-     * @description This method load questions from the array
-     * */
-
-    public void loadQuestion(){
-        //get the first question
-        String question = getQuestion(question_index);
-
-
-
-        //Display the question
-        DisplayAnswer(question);
-    }
-
-    /*
-     * @description This method display questions on the application
-     * */
-
-    public void DisplayAnswer(String question_to_display){
-        getquestion_txt.setText(question_to_display);
-    }
-
-    public void DisplayInsight(String displayInsight){
-        getinsight_txt.setText(displayInsight);
-    }
-
-
-    /*
-    * @description This method get questions from the array
-    * @param {String} question_index
-    * @returns {String} question of the question_index in the array
+    * @descriptions This method check question one correct answer is supplied
+    *
     * */
 
-    public String getQuestion(int question_index){
-        String[] question = res.getStringArray(R.array.question);
-        //get the total questions available
-        question_length = question.length;
-        return question[question_index];
+    public void checkIfQuestionOneAnswerIsCorrect(){
+
+        if(getQuestionOneSuppliedAnswer.getText().toString().trim().equalsIgnoreCase("mosquito")){
+            correctAnsSelected++;
+        }else{
+            wrongAnsSelected++;
+        }
+    }
+
+    /*
+     * @descriptions This method check question two correct answers are selected
+     *
+     * */
+
+    public void checkIfQuestionTwoAnswerAreSelected(){
+
+        boolean IsOptionOneSelected = getQuestionTwoOptionOne.isChecked();
+        boolean IsOptionTwoSelected = getGetQuestionTwoOptionTwo.isChecked();
+        boolean IsOptionThreeSelected = getGetQuestionTwoOptionThree.isChecked();
+        boolean IsOptionFourSelected = getGetQuestionTwoOptionFour.isChecked();
+
+        if(!IsOptionFourSelected && IsOptionOneSelected && IsOptionTwoSelected && IsOptionThreeSelected){
+            correctAnsSelected++;
+        }else{
+            wrongAnsSelected++;
+        }
+
+
     }
 
 
     /*
-     * @description This method get answer from the array
-     * @param {String} question_index
-     * @returns {String} question of the answer_index in the array
+     * @descriptions This method check question three correct answer is selected
+     *
      * */
 
-    public String getAnswer(int answer_index){
-        String[] answer = res.getStringArray(R.array.answer);
+    public void checkIfQuestionThreeAnswerAreSelected(){
 
-        return answer[answer_index];
+        boolean checkIfCorrectedAnsSelected = getQuestionThreeAns.isChecked();
+
+        if(checkIfCorrectedAnsSelected){
+            correctAnsSelected++;
+        }else {
+            wrongAnsSelected++;
+        }
+
+    }
+
+
+    /*
+     * @descriptions This method check question four correct answer is selected
+     *
+     * */
+
+    public void checkIfQuestionFourAnswerAreSelected(){
+
+        boolean checkIfCorrectedAnsSelected = getQuestionFourAns.isChecked();
+
+        if(checkIfCorrectedAnsSelected){
+            correctAnsSelected++;
+        }else {
+            wrongAnsSelected++;
+        }
+
+    }
+
+
+    /*
+    *
+    * @descriptions This method check if question five answer is supplied
+    *
+    * */
+
+    public void checkIfQuestionFiveAnswerAreSelected(){
+        if(getQuestionFiveSuppliedAns.getText().toString().trim().equalsIgnoreCase("human immunodeficiency virus")){
+            correctAnsSelected++;
+        }else{
+            wrongAnsSelected++;
+        }
+
+    }
+
+
+    /*
+     *
+     * @descriptions This method check if question six answers are supplied
+     *
+     * */
+
+    public void checkIfQuestionSixAnswerAreSelected(){
+        boolean IsOptionOneSelected = getQuestionSixOptionOne.isChecked();
+        boolean IsOptionTwoSelected = getGetQuestionSixOptionTwo.isChecked();
+        boolean IsOptionThreeSelected = getGetQuestionSixOptionThree.isChecked();
+        boolean IsOptionFourSelected = getGetQuestionSixOptionFour.isChecked();
+
+        if(!IsOptionFourSelected && IsOptionOneSelected && IsOptionTwoSelected && !IsOptionThreeSelected){
+            correctAnsSelected++;
+        }else{
+            wrongAnsSelected++;
+        }
     }
 
     /*
-     * @description This method get insight from the array
-     * @param {String} question_index
-     * @returns {String} question of the insight_index in the array
+     * @descriptions This method check question four correct answer is selected
+     *
      * */
 
-    public String getInsight(int insight_index){
-        String[] insight = res.getStringArray(R.array.insight);
-        return insight[insight_index];
+    public void checkIfQuestionSevenAnswerAreSelected(){
+
+        boolean checkIfCorrectedAnsSelected = getQuestionSevenAns.isChecked();
+
+        if(checkIfCorrectedAnsSelected){
+            correctAnsSelected++;
+        }else {
+            wrongAnsSelected++;
+        }
     }
+
+
+    /*
+     * @descriptions This method check number of correct answer selected
+     *
+     * */
 
     public void checkAnswerSelected(View view) {
+        correctAnsSelected =0;
+        wrongAnsSelected = 0;
 
-        if(getquestion_txt.length() != 0){
+        checkIfQuestionOneAnswerIsCorrect();
+        checkIfQuestionTwoAnswerAreSelected();
+        checkIfQuestionThreeAnswerAreSelected();
+        checkIfQuestionFourAnswerAreSelected();
+        checkIfQuestionFiveAnswerAreSelected();
+        checkIfQuestionSixAnswerAreSelected();
+        checkIfQuestionSevenAnswerAreSelected();
 
-            //get the right answer
-            String answer = getAnswer(question_index);
+        Toast.makeText(this, String.format(getString(R.string.message), correctAnsSelected, wrongAnsSelected), Toast.LENGTH_LONG).show();
 
-            //get insight
-            String insight = getInsight(question_index);
+        // enable score button
+        getScoreBtn.setClickable(true);;
+        getScoreBtn.setAlpha(1f);
 
-            //get the user selected answer and compare
-            if(answer.equals(get_answer_chosen)){
-                get_answer_status.setText("Correct");
-                get_answer_status.setTextColor(Color.parseColor("#18a404"));
-                corrected_score++;
-            }else{
-                get_answer_status.setText("Wrong");
-                get_answer_status.setTextColor(Color.RED);
-            }
-
-
-
-            getCheckBtn.setClickable(false);
-            getCheckBtn.setAlpha(.5f);
-
-            getNextBtn.setClickable(true);
-            getNextBtn.setAlpha(1f);
-
-            getinsight_txt.setText(insight);
-            getinsight_txt.setMovementMethod(new ScrollingMovementMethod());
-
-
-        }else{
-
-        Toast.makeText(MainActivity.this, "Please Choose An answer", Toast.LENGTH_SHORT).show();
-        }
-
+        //disable submit button
+        getSubmitBtn.setClickable(false);
+        getSubmitBtn.setAlpha(0.3f);
 
     }
 
 
+    /*
+     * @descriptions This method nagivate the page to a score sheet
+     *
+     * */
+
     public void go_to_next_question(View view) {
-        // clear previous data
-        answer_rad.clearCheck();
-        getinsight_txt.setText("");
-
-        getNextBtn.setClickable(false);
-        getNextBtn.setAlpha(.3f);
-
-        getCheckBtn.setClickable(true);
-        getCheckBtn.setAlpha(1f);
-
-        get_answer_status.setText("None");
-        get_answer_status.setTextColor(Color.parseColor("#000000"));
-
-
-        // Toast.makeText(MainActivity.this, "question_index: "+ question_index + "question_length "+ (question_length-1), Toast.LENGTH_SHORT).show();
-
-        //Load next question
-        if(question_index == (question_length-1)){
-            //go to summary page
-            Intent intent = new Intent(MainActivity.this, summaryActivity.class);
-            intent.putExtra("corrected_score", corrected_score);
-            intent.putExtra("total_question", (question_length));
-            startActivity(intent);
-        }else{
-
-        question_index++;
-        loadQuestion();
-        }
+        Intent intent = new Intent(MainActivity.this, summaryActivity.class);
+        intent.putExtra("correct_selected_answer", correctAnsSelected);
+        intent.putExtra("total_question", (correctAnsSelected + wrongAnsSelected));
+        startActivity(intent);
     }
 }

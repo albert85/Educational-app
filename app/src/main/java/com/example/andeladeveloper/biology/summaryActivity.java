@@ -23,7 +23,7 @@ public class summaryActivity extends AppCompatActivity {
         getscore = findViewById(R.id.score_txt);
 
         //get corrected answer
-         corrected_score = intent.getIntExtra("corrected_score",0);
+         corrected_score = intent.getIntExtra("correct_selected_answer",0);
          total_score = intent.getIntExtra("total_question",0);
 
         calculatescore();
